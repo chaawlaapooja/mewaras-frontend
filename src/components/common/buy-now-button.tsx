@@ -8,6 +8,7 @@ interface BuyNowButtonProps {
   whatsappNumber?: string;
   className?: string;
   size?: 'default' | 'sm' | 'lg';
+  label?: string;
 }
 
 export function BuyNowButton({
@@ -15,6 +16,7 @@ export function BuyNowButton({
   whatsappNumber,
   className,
   size = 'default',
+  label = 'Buy Now',
 }: BuyNowButtonProps) {
   const handleClick = () => {
     if (!whatsappNumber) return;
@@ -30,7 +32,7 @@ export function BuyNowButton({
       disabled={!whatsappNumber}
     >
       <MessageCircle className="h-4 w-4" />
-      Buy Now
+      {label}
     </Button>
   );
 }
