@@ -3,25 +3,25 @@ import type { StrapiMedia } from './strapi';
 
 export interface CompositionItem {
   id?: number;
-  name: string;
-  quantity: number;
+  name?: string;
+  quantity?: number;
 }
 
 export interface Product {
   id: number;
   documentId: string;
   name: string;
-  slug: string;
-  description: string | null;
-  mrp: number;
-  discountedPrice: number | null;
-  composition: CompositionItem[];
-  images: StrapiMedia[];
-  video: StrapiMedia | null;
-  featured: boolean;
-  active: boolean;
-  createdAt: string;
-  updatedAt: string;
+  slug?: string | null;
+  description?: string | null;
+  mrp?: number | null;
+  discountedPrice?: number | null;
+  composition?: CompositionItem[] | null;
+  images?: StrapiMedia[] | null;
+  video?: StrapiMedia | null;
+  featured?: boolean | null;
+  active?: boolean | null;
+  createdAt?: string;
+  updatedAt?: string;
   category?: Category | null;
 }
 

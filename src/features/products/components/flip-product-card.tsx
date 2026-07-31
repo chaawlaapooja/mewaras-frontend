@@ -5,6 +5,7 @@ import { BuyNowButton } from '@/components/common/buy-now-button';
 import { PriceDisplay } from '@/components/common/price-display';
 import type { Product } from '@/types/product';
 import { getOptimizedImageUrl } from '@/utils/cloudinary';
+import { getProductPath } from '@/utils/product';
 
 interface FlipProductCardProps {
   product: Product;
@@ -12,7 +13,8 @@ interface FlipProductCardProps {
 }
 
 export function FlipProductCard({ product, whatsappNumber }: FlipProductCardProps) {
-  const image = product.images[0];
+  const image = product.images?.[0];
+  const productPath = getProductPath(product);
 
   return (
     <motion.div
@@ -22,7 +24,7 @@ export function FlipProductCard({ product, whatsappNumber }: FlipProductCardProp
     >
       <div className="relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute inset-0 overflow-hidden rounded-2xl border border-border bg-card [backface-visibility:hidden]">
-          <Link to={`/products/${product.slug}`} className="block h-full">
+          <Link to={productPath} className="block h-full">
             <img
               src={getOptimizedImageUrl(image, 600)}
               alt={image?.alternativeText ?? product.name}
@@ -30,7 +32,9 @@ export function FlipProductCard({ product, whatsappNumber }: FlipProductCardProp
               loading="lazy"
             />
             <div className="space-y-2 p-4">
-              {product.category ? <Badge variant="secondary">{product.category.name}</Badge> : null}
+              {product.category?.name ? (
+                <Badge variant="secondary">{product.category.name}</Badge>
+              ) : null}
               <h3 className="font-heading text-lg font-medium">{product.name}</h3>
               <PriceDisplay mrp={product.mrp} discountedPrice={product.discountedPrice} />
             </div>
@@ -53,10 +57,7 @@ export function FlipProductCard({ product, whatsappNumber }: FlipProductCardProp
           </div>
           <div className="space-y-2">
             <BuyNowButton productName={product.name} whatsappNumber={whatsappNumber} />
-            <Link
-              to={`/products/${product.slug}`}
-              className="block text-center text-sm text-primary hover:underline"
-            >
+            <Link to={productPath} className="block text-center text-sm text-primary hover:underline">
               View details
             </Link>
           </div>

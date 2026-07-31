@@ -12,7 +12,6 @@ interface ImageCard {
 
 interface ImageCarouselHeroProps {
   title: string;
-  subtitle: string;
   description: string;
   ctaText: string;
   onCtaClick?: () => void;
@@ -25,7 +24,6 @@ interface ImageCarouselHeroProps {
 
 export function ImageCarouselHero({
   title,
-  subtitle,
   description,
   ctaText,
   onCtaClick,
@@ -130,7 +128,6 @@ export function ImageCarouselHero({
         </div>
 
         <div className="relative z-20 mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-primary">{subtitle}</p>
           <h1 className="font-heading text-balance text-4xl leading-tight font-semibold text-foreground sm:text-5xl lg:text-6xl">
             {title}
           </h1>

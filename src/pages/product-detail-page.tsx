@@ -11,7 +11,8 @@ import { useProduct } from '@/hooks/use-products';
 import { useWebsiteSettings } from '@/hooks/use-settings';
 import { SITE_URL } from '@/constants/config';
 import { getOptimizedImageUrl } from '@/utils/cloudinary';
-import { getEffectivePrice } from '@/utils/pricing';
+import { getEffectivePrice, hasPrice } from '@/utils/pricing';
+import { getProductPath } from '@/utils/product';
 
 export function ProductDetailPage() {
   const { slug = '' } = useParams();
@@ -42,20 +43,28 @@ export function ProductDetailPage() {
     );
   }
 
-  const primaryImage = product.images[0];
+  const primaryImage = product.images?.[0];
+  const productPath = getProductPath(product);
+  const effectivePrice = getEffectivePrice(product.mrp, product.discountedPrice);
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     description: product.description?.replace(/<[^>]+>/g, '') ?? product.name,
-    image: primaryImage ? getOptimizedImageUrl(primaryImage, 1200) : undefined,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'INR',
-      price: getEffectivePrice(product.mrp, product.discountedPrice),
-      availability: 'https://schema.org/InStock',
-      url: `${SITE_URL}/products/${product.slug}`,
-    },
+    ...(primaryImage?.url
+      ? { image: getOptimizedImageUrl(primaryImage, 1200) }
+      : {}),
+    ...(hasPrice(product.mrp, product.discountedPrice) && effectivePrice != null
+      ? {
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            price: effectivePrice,
+            availability: 'https://schema.org/InStock',
+            url: `${SITE_URL}${productPath}`,
+          },
+        }
+      : {}),
   };
 
   return (
@@ -63,8 +72,8 @@ export function ProductDetailPage() {
       <Seo
         title={product.name}
         description={product.description?.replace(/<[^>]+>/g, '') ?? `Shop ${product.name}`}
-        path={`/products/${product.slug}`}
-        image={primaryImage ? getOptimizedImageUrl(primaryImage, 1200) : undefined}
+        path={productPath}
+        image={primaryImage?.url ? getOptimizedImageUrl(primaryImage, 1200) : undefined}
         type="product"
         structuredData={structuredData}
       />
@@ -73,7 +82,7 @@ export function ProductDetailPage() {
         <ProductGallery images={product.images} video={product.video} productName={product.name} />
 
         <div className="space-y-6">
-          {product.category ? <Badge>{product.category.name}</Badge> : null}
+          {product.category?.name ? <Badge>{product.category.name}</Badge> : null}
           <h1 className="font-heading text-4xl font-semibold">{product.name}</h1>
           <PriceDisplay
             mrp={product.mrp}
@@ -93,9 +102,11 @@ export function ProductDetailPage() {
               <h2 className="font-heading text-xl font-medium">Composition</h2>
               <ul className="mt-3 space-y-2 rounded-xl border border-border bg-card/50 p-4">
                 {product.composition.map((item, index) => (
-                  <li key={`${item.name}-${index}`} className="flex justify-between text-sm">
-                    <span>{item.name}</span>
-                    <span className="text-muted-foreground">x{item.quantity}</span>
+                  <li key={`${item.name ?? 'item'}-${index}`} className="flex justify-between text-sm">
+                    <span>{item.name ?? 'Ingredient'}</span>
+                    {item.quantity != null ? (
+                      <span className="text-muted-foreground">x{item.quantity}</span>
+                    ) : null}
                   </li>
                 ))}
               </ul>

@@ -12,30 +12,42 @@ const productPopulate = {
   },
 };
 
-export const productService = {
-  async getAll(filters: ProductFilters = {}): Promise<Product[]> {
-    const strapiFilters: Record<string, unknown> = {
-      active: filters.active ?? true,
-    };
+const buildProductFilters = (filters: ProductFilters): Record<string, unknown> => {
+  const conditions: Record<string, unknown>[] = [];
 
-    if (filters.featured !== undefined) {
-      strapiFilters.featured = filters.featured;
-    }
+  if (filters.active !== undefined) {
+    conditions.push({ active: filters.active });
+  } else {
+    conditions.push({ $or: [{ active: true }, { active: { $null: true } }] });
+  }
 
-    if (filters.categorySlug) {
-      strapiFilters.category = { slug: filters.categorySlug };
-    }
+  if (filters.featured !== undefined) {
+    conditions.push({ featured: filters.featured });
+  }
 
-    if (filters.search) {
-      strapiFilters.$or = [
+  if (filters.categorySlug) {
+    conditions.push({ category: { slug: filters.categorySlug } });
+  }
+
+  if (filters.search) {
+    conditions.push({
+      $or: [
         { name: { $containsi: filters.search } },
         { description: { $containsi: filters.search } },
-      ];
-    }
+      ],
+    });
+  }
 
+  if (conditions.length === 0) return {};
+  if (conditions.length === 1) return conditions[0];
+  return { $and: conditions };
+};
+
+export const productService = {
+  async getAll(filters: ProductFilters = {}): Promise<Product[]> {
     const { data } = await apiClient.get<StrapiListResponse<Product>>('/api/products', {
       params: {
-        filters: strapiFilters,
+        filters: buildProductFilters(filters),
         ...productPopulate,
         pagination: { pageSize: 100 },
       },
@@ -52,7 +64,12 @@ export const productService = {
   async getBySlug(slug: string): Promise<Product | null> {
     const { data } = await apiClient.get<StrapiListResponse<Product>>('/api/products', {
       params: {
-        filters: { slug, active: true },
+        filters: {
+          $and: [
+            { $or: [{ slug }, { documentId: slug }] },
+            { $or: [{ active: true }, { active: { $null: true } }] },
+          ],
+        },
         ...productPopulate,
       },
     });

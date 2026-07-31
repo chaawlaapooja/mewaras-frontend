@@ -57,7 +57,6 @@ export function HeroCarousel() {
   return (
     <ImageCarouselHero
       title={settings.heroTitle}
-      subtitle="Luxury Gifting"
       description={settings.heroSubtitle}
       ctaText={settings.heroCtaText}
       onCtaClick={() => navigate(settings.heroCtaLink)}

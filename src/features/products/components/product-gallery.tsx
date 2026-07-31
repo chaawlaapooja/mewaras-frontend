@@ -5,14 +5,15 @@ import { getOptimizedImageUrl, getVideoUrl } from '@/utils/cloudinary';
 import { cn } from '@/utils/cn';
 
 interface ProductGalleryProps {
-  images: StrapiMedia[];
+  images?: StrapiMedia[] | null;
   video?: StrapiMedia | null;
   productName: string;
 }
 
 export function ProductGallery({ images, video, productName }: ProductGalleryProps) {
+  const galleryImages = images?.filter((image) => image?.url) ?? [];
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeImage = images[activeIndex];
+  const activeImage = galleryImages[activeIndex];
   const videoUrl = getVideoUrl(video);
 
   return (
@@ -20,7 +21,7 @@ export function ProductGallery({ images, video, productName }: ProductGalleryPro
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
         <AnimatePresence mode="wait">
           <motion.img
-            key={activeImage?.documentId ?? activeIndex}
+            key={activeImage?.documentId ?? 'placeholder'}
             src={getOptimizedImageUrl(activeImage, 1000)}
             alt={activeImage?.alternativeText ?? productName}
             className="aspect-square w-full object-cover"
@@ -33,9 +34,9 @@ export function ProductGallery({ images, video, productName }: ProductGalleryPro
         </AnimatePresence>
       </div>
 
-      {images.length > 1 ? (
+      {galleryImages.length > 1 ? (
         <div className="grid grid-cols-5 gap-2">
-          {images.map((image, index) => (
+          {galleryImages.map((image, index) => (
             <button
               key={image.documentId}
               type="button"

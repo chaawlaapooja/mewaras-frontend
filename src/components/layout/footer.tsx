@@ -1,8 +1,9 @@
-import { Globe, Mail, MapPin, Phone } from 'lucide-react';
+import { Globe, Mail, MapPin, Phone, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useWebsiteSettings } from '@/hooks/use-settings';
 import { SITE_NAME } from '@/constants/config';
 import { Skeleton } from '@/components/ui/skeleton';
+import { buildWhatsAppUrl } from '@/utils/whatsapp';
 
 export function Footer() {
   const { data: settings, isLoading } = useWebsiteSettings();
@@ -48,6 +49,14 @@ export function Footer() {
                 <li className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-primary" />
                   <a href={`tel:${settings.businessPhone}`}>{settings.businessPhone}</a>
+                </li>
+              ) : null}
+              {settings?.whatsappNumber ? (
+                <li className="flex items-center gap-2">
+                  <MessageCircle className="h-4 w-4 text-primary" />
+                  <a href={buildWhatsAppUrl(settings.whatsappNumber, 'all products')}>
+                    {settings.whatsappNumber}
+                  </a>
                 </li>
               ) : null}
               {settings?.email ? (
