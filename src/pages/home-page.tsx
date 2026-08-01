@@ -25,7 +25,7 @@ export function HomePage() {
           <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-secondary/80 to-card p-8 text-center md:p-12">
             <h2 className="font-heading text-2xl font-semibold md:text-3xl">Ready to place an order?</h2>
             <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-              Connect with us on WhatsApp for personalized recommendations and swift assistance.
+              <a href={`https://wa.me/${settings.whatsappNumber}`}>Connect with us on WhatsApp for personalized recommendations and swift assistance.</a>
             </p>
           </div>
         </section>

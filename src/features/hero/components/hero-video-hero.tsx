@@ -21,7 +21,7 @@ interface HeroVideoHeroProps {
 
 export function HeroVideoHero({
   title,
-  subtitle,
+  subtitle: _subtitle,
   description,
   ctaText,
   onCtaClick,
