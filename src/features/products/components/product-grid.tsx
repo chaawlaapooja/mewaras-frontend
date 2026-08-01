@@ -1,4 +1,4 @@
-import { FlipProductCard } from '@/features/products/components/flip-product-card';
+import { ProductCard } from '@/features/products/components/product-card';
 import type { Product } from '@/types/product';
 import { StaggerContainer, StaggerItem } from '@/components/common/stagger-container';
 
@@ -19,8 +19,8 @@ export function ProductGrid({ products, whatsappNumber }: ProductGridProps) {
   return (
     <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
-        <StaggerItem key={product.documentId}>
-          <FlipProductCard product={product} whatsappNumber={whatsappNumber} />
+        <StaggerItem key={product.documentId} className="h-full">
+          <ProductCard product={product} whatsappNumber={whatsappNumber} />
         </StaggerItem>
       ))}
     </StaggerContainer>

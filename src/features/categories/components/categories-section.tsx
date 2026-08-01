@@ -22,7 +22,7 @@ export function CategoriesSection() {
       {isError ? <ErrorState onRetry={() => void refetch()} /> : null}
       {categories ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category, index) => (
+          {categories.sort((a, b) => a.id - b.id).map((category, index) => (
             <CategoryCard key={category.documentId} category={category} index={index} />
           ))}
         </div>
