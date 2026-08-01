@@ -2,6 +2,7 @@ import { HeroCarousel } from '@/features/hero/components/hero-carousel';
 import { CategoriesSection } from '@/features/categories/components/categories-section';
 import { FeaturedProductsSection } from '@/features/products/components/featured-products-section';
 import { CatalogSection } from '@/features/products/components/catalog-section';
+import { TestimonialsSection } from '@/features/testimonials/components/testimonials-section';
 import { Seo } from '@/components/common/seo';
 import { PageTransition } from '@/components/common/page-transition';
 import { useWebsiteSettings } from '@/hooks/use-settings';
@@ -20,6 +21,7 @@ export function HomePage() {
       <CategoriesSection />
       <FeaturedProductsSection />
       <CatalogSection />
+      <TestimonialsSection />
       {settings ? (
         <section className="container mx-auto px-4 pb-16">
           <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-secondary/80 to-card p-8 text-center md:p-12">
