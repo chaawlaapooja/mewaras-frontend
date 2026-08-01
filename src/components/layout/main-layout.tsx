@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { ActivityBanner } from '@/features/activity-banner/components/activity-banner';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
@@ -10,6 +11,7 @@ export function MainLayout() {
         <Outlet />
       </main>
       <Footer />
+      <ActivityBanner />
     </div>
   );
 }
