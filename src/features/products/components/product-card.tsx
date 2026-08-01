@@ -56,7 +56,7 @@ export function ProductCard({ product, whatsappNumber }: ProductCardProps) {
           <BuyNowButton
             productName={product.name}
             whatsappNumber={whatsappNumber}
-            label={showBuyNow ? 'Buy Now' : 'Enquire'}
+            label={showBuyNow ? 'Buy Now' : 'Enquire Now'}
             size="sm"
             className="min-w-0"
           />

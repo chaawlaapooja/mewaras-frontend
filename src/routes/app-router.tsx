@@ -18,6 +18,12 @@ const ProductDetailPage = lazy(() =>
 const NotFoundPage = lazy(() =>
   import('@/pages/not-found-page').then((module) => ({ default: module.NotFoundPage })),
 );
+const AboutUsPage = lazy(() =>
+  import('@/pages/about-us-page').then((module) => ({ default: module.AboutUsPage })),
+);
+const ContactUsPage = lazy(() =>
+  import('@/pages/contact-us-page').then((module) => ({ default: module.ContactUsPage })),
+);
 
 const withSuspense = (element: ReactNode) => (
   <Suspense fallback={<div className="container mx-auto px-4 py-12"><LoadingState /></div>}>
@@ -33,6 +39,8 @@ const router = createBrowserRouter([
       { index: true, element: withSuspense(<HomePage />) },
       { path: 'products', element: withSuspense(<ProductsPage />) },
       { path: 'products/:slug', element: withSuspense(<ProductDetailPage />) },
+      { path: 'about-us', element: withSuspense(<AboutUsPage />) },
+      { path: 'contact-us', element: withSuspense(<ContactUsPage />) },
       { path: 'category/:slug', element: withSuspense(<CategoryPage />) },
       { path: '*', element: withSuspense(<NotFoundPage />) },
     ],

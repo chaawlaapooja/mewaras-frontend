@@ -4,6 +4,7 @@
 @theme {
   --font-heading: 'Bitter', serif;
   --font-body: 'Roboto', system-ui, sans-serif;
+  --font-brand: 'Dancing Script', cursive;
 
   --color-background: #0f0a18;
   --color-foreground: #f5f0ff;
@@ -61,6 +62,10 @@
 
   .font-body {
     font-family: var(--font-body);
+  }
+
+  .font-brand {
+    font-family: var(--font-brand);
   }
 
   .text-balance {
