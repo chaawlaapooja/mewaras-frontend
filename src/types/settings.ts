@@ -8,6 +8,8 @@ export interface WebsiteSettings {
   heroCtaText: string;
   heroCtaLink: string;
   heroImages: StrapiMedia[];
+  heroVideo?: StrapiMedia | null;
+  heroVideoPoster?: StrapiMedia | null;
   businessPhone: string;
   email: string;
   address: string;
