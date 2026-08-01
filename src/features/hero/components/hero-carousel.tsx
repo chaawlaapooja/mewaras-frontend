@@ -38,6 +38,7 @@ export function HeroCarousel() {
     [settings?.heroImages, settings?.heroTitle],
   );
 
+  console.log(settings);
   const heroVideoUrl = settings?.heroVideo ? getVideoUrl(settings.heroVideo) : null;
 
   if (isLoading) {

@@ -67,9 +67,8 @@ export function HeroVideoHero({
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/65 to-background/90" />
       </div>
 
-      <div className="relative z-10 flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
+      <div className="relative z-10 flex min-h-[calc(100vh-4rem)] flex-col items-center justify-between px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-primary">{subtitle}</p>
           <h1 className="font-heading text-balance text-4xl leading-tight font-semibold text-foreground sm:text-5xl lg:text-6xl">
             {title}
           </h1>
