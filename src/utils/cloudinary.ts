@@ -27,3 +27,11 @@ export const getVideoUrl = (media: StrapiMedia | null | undefined): string | nul
   if (!media?.url) return null;
   return resolveMediaUrl(media.url);
 };
+
+export const getImageUrl = (
+  media: StrapiMedia | null | undefined,
+  width = 800,
+): string | null => {
+  if (!media?.url) return null;
+  return getOptimizedImageUrl(media, width);
+};
